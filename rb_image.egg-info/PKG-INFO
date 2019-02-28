@@ -1,0 +1,12 @@
+Metadata-Version: 1.0
+Name: rb-image
+Version: 0.1.dev0
+Summary: Scikit-image wrapper for Red Buffer. Contains all the utility functions.
+Home-page: UNKNOWN
+Author: imransalam
+Author-email: imran.salam.24@gmail.com
+License: MIT
+Description-Content-Type: UNKNOWN
+Description: Scikit-image wrapper
+Keywords: rb skimage
+Platform: UNKNOWN
