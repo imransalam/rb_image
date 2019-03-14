@@ -1,10 +1,10 @@
-setup.cfg
+README.md
 setup.py
 rb_image/__init__.py
-rb_image/rb_image.py
+rb_image/docgen.py
+rb_image/image_utils.py
 rb_image.egg-info/PKG-INFO
 rb_image.egg-info/SOURCES.txt
 rb_image.egg-info/dependency_links.txt
-rb_image.egg-info/entry_points.txt
+rb_image.egg-info/requires.txt
 rb_image.egg-info/top_level.txt
-rb_image.egg-info/zip-safe
