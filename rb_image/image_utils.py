@@ -163,7 +163,7 @@ def fix_points(sections_pols, sz=[640,640], delta=20):
 			sections_pols_1[pol_idx][pt_idx] = mean_point
 	return sections_pols_1, img
 
-def simplify_pol(pol, tol=2, max_iter=20):
+def simplify_polygon(pol, tol=2, max_iter=20):
 	'''
 	Inputs: Accepts a polygon, tolerance=2 and maximum iteration.
 	Default values are tol=2 and max_iter=20
@@ -172,7 +172,7 @@ def simplify_pol(pol, tol=2, max_iter=20):
 	>> POL = [
 					[125, 270], [157, 307], [131, 323] 
 			]
-	>> simplify_pol(POL)
+	>> simplify_polygon(POL)
 	'''
 	iiter = 0
 	while True:
@@ -215,13 +215,13 @@ def get_region_polygons(roof_regions):
 	pols = [simplify_pol(pi) for pi in pols]
 	return pols
 
-def angle_between_new(p1, p2):
+def angle_between_points(p1, p2):
 	'''
 	Inputs: Accepts two Points of line
 	Outputs: Angle in Degrees in 2D plane
 	Example:
 	>> p1,p2 = (4,6),(12,18)
-	>> angle_between_new(p1,p2)
+	>> angle_between_points(p1,p2)
 	'''
 	if p2[0] < p1[0]:
 		pt = p2
@@ -237,14 +237,14 @@ def angle_between_new(p1, p2):
 				return (180 - (np.arccos(1.0 * b / h) * 180.0 / np.pi % 360.0))
 		return np.arccos(1.0 * b / h) * 180.0 / np.pi % 360.0
 
-def getRotationAngle(img):
+def get_rotation_angle(img):
 	'''
 	Inputs: Accepts a binary Image
 	Outputs: Rotation angle in Degrees
 	Example:
 	>> img = np.zeros((10,10))
 	>> img[4:6,4:6] = 1
-	>> getRotationAngle(img)
+	>> get_rotation_angle(img)
 	'''
 	edges = feature.canny(img)
 	lines = transform.probabilistic_hough_line(edges)
@@ -255,5 +255,5 @@ def getRotationAngle(img):
 		d = np.power(a[0] - b[0], 2) + np.power(a[1] - b[1], 2)
 		if d > max_len:
 			max_len = d
-			angle = angle_between_new(a, b)
+			angle = angle_between_points(a, b)
 	return angle
