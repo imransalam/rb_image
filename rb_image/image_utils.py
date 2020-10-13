@@ -257,3 +257,45 @@ def get_rotation_angle(img):
 			max_len = d
 			angle = angle_between_points(a, b)
 	return angle
+
+def detection_confusion_matrix(js):
+	'''
+	Inputs: Accepts a dictionary with real and 
+	predicted bounding boxes information.
+	The format is in numpy format.
+	Outputs: TP, TN, FP, FN
+	'''	
+	TP, TN, FP, FN = 0,0,0,0
+	thresh = 0.7
+	for ii, j in enumerate(js):
+
+	    for counter_real, box_real in enumerate(j['real']):
+		real_x1 = box_real['x1']
+		real_x2 = box_real['x2']
+		real_y1 = box_real['y1']
+		real_y2 = box_real['y2']
+		real_img = np.zeros((j['x'], j['y']))
+		real_img[real_x1: real_x2, real_y1: real_y2] = 1
+		FN_flag = False
+		for counter_pred, box_pred in enumerate(j['pred']):
+		    pred_x1 = box_pred['x1']
+		    pred_x2 = box_pred['x2']
+		    pred_y1 = box_pred['y1']
+		    pred_y2 = box_pred['y2']
+		    pred_img = np.zeros((j['x'], j['y']))
+		    pred_img[pred_x1: pred_x2, pred_y1: pred_y2] = 1
+
+		    iou = np.sum((pred_img * real_img) > 0) / np.sum((pred_img + real_img) > 0)
+
+		    if iou > thresh:
+			FN_flag = True
+			TP = TP + 1
+
+		    if iou <= thresh and iou > 0.03:
+			FN_flag = True
+			FP = FP + 1
+
+		if FN_flag == False:
+		    FN = FN + 1
+	return TP, TN, FP, FN
+            
